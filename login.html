@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>로그인</title>
+<style>
+body { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; font-family:sans-serif; background:#f0f0f0; }
+input { margin:5px 0; padding:10px; width:250px; border-radius:10px; border:1px solid #ccc; }
+button { margin:10px 0; padding:10px; width:270px; border:none; border-radius:10px; background:#4a90e2; color:white; cursor:pointer; }
+button:active { background:#357ab8; }
+</style>
+</head>
+<body>
+
+<h2>로그인</h2>
+<input type="text" id="id" placeholder="아이디">
+<input type="password" id="pw" placeholder="비밀번호">
+<button onclick="login()">로그인</button>
+<button onclick="location.href='join.html'">회원가입</button>
+
+<script>
+const apiUrl = "https://script.google.com/macros/s/AKfycby7Q-Uz2ARZM70SoL01QmNcFlGW_asapilpmPOko4uRVui_hO4qRzsQrwZiZF1SA14zAw/exec";
+
+async function login() {
+    const id = document.getElementById("id").value;
+    const pw = document.getElementById("pw").value;
+    if(!id || !pw){ alert("아이디/비밀번호를 입력하세요."); return; }
+
+    const res = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({action:"login", id, pw})
+    });
+    const text = await res.text();
+    if(text === "SUCCESS"){
+        alert("로그인 성공!");
+    } else {
+        alert("로그인 실패!");
+    }
+}
+</script>
+</body>
+</html>
